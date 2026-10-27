@@ -3,19 +3,480 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rl-docx-editor - démonstration</title>
-    <style>
-      html,
-      body,
-      #racine {
-        height: 100%;
-        margin: 0;
-      }
-    </style>
-    <script type="module" crossorigin src="/assets/index-B5e92_I6.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CmqP-98l.css">
+    <title>rl-docx-editor - Éditeur de modèles Word dans le navigateur</title>
+    <meta
+      name="description"
+      content="Un éditeur de modèles Word dans le navigateur : on glisse ses variables à la souris, boucles, conditions et images, import et export .docx. Par RLDEV."
+    />
+    <meta name="theme-color" content="#e4e4e4" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='none' stroke='%23ff7120' stroke-width='4'/%3E%3Crect x='10' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3Crect x='18' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="/assets/accueil-Ck4Pp2V1.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/brouillage-BeZ8upxm.js">
+    <link rel="stylesheet" crossorigin href="/assets/brouillage-DnTDR1Yn.css">
+    <link rel="stylesheet" crossorigin href="/assets/accueil-o8PC0fCv.css">
   </head>
   <body>
-    <div id="racine"></div>
+    <header class="entete">
+      <div class="conteneur entete-grille">
+        <a class="marque" href="#haut" aria-label="rl-docx-editor, retour en haut">
+          <span class="marque-logo" aria-hidden="true">{ }</span>
+          <span class="marque-texte"><small>RLDEV</small><strong>Docx Editor</strong></span>
+        </a>
+        <nav class="navigation" aria-label="Sections">
+          <a href="#produit">Produit</a>
+          <a href="#fonctionnalites">Fonctionnalités</a>
+          <a href="#usage">Cas d'usage</a>
+          <a href="#syntaxe">Syntaxe</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="entete-actions">
+          <a class="bouton" href="./demo/" data-brouille>Démo</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="haut">
+      <!-- 1. Accroche ------------------------------------------------------------ -->
+      <section class="accroche" id="produit" aria-labelledby="titre-accroche">
+        <div class="conteneur accroche-grille">
+          <div class="accroche-bandeau">
+            <span class="carre-orange coin-hg" aria-hidden="true"></span>
+            <span class="carre-orange coin-hd" aria-hidden="true"></span>
+            <h1 class="defilant" id="titre-accroche">
+              <span class="visuellement-cache">Modèles Word, glisser-déposer</span>
+              <span class="defilant-piste" aria-hidden="true">
+                <span>Modèles Word&nbsp;·&nbsp;Glisser-déposer&nbsp;·&nbsp;</span>
+                <span>Modèles Word&nbsp;·&nbsp;Glisser-déposer&nbsp;·&nbsp;</span>
+              </span>
+            </h1>
+            <p class="accroche-etiquettes">
+              <span class="carre-orange" aria-hidden="true"></span>
+              <span>Éditeur</span><span>Navigateur</span><span>.docx</span>
+              <span class="carre-orange pousse" aria-hidden="true"></span>
+            </p>
+          </div>
+
+          <div class="accroche-texte">
+            <p class="accroche-paragraphe">
+              Un éditeur de modèles Word dans le navigateur. Il ressemble à Word, et l'on y glisse ses variables à la souris pour obtenir un modèle prêt.
+            </p>
+            <div class="accroche-actions">
+              <a class="bouton" href="./demo/" data-brouille>Essayer la démo</a>
+              <a class="bouton-contour" href="#fonctionnalites">Comment ça marche</a>
+            </div>
+          </div>
+
+          <!-- Maquette animée : une variable glisse du volet vers la page. -->
+          <div class="maquette" aria-hidden="true">
+            <div class="maquette-ruban">
+              <span class="maquette-onglet est-actif">Accueil</span>
+              <span class="maquette-onglet">Insertion</span>
+              <span class="maquette-onglet">Variables</span>
+              <span class="maquette-onglet">Mise en page</span>
+            </div>
+            <div class="maquette-corps">
+              <div class="maquette-page">
+                <div class="maquette-ligne courte"></div>
+                <div class="maquette-ligne moyenne"></div>
+                <div class="maquette-titre">Facture</div>
+                <div class="maquette-texte">
+                  Client : <span class="maquette-cible"><span class="puce-variable">{{ client_nom }}</span></span>
+                </div>
+                <div class="maquette-tableau">
+                  <div class="maquette-boucle">{%tr for a in articles %}</div>
+                  <div class="maquette-ligne-tab"><span>{{ a.designation }}</span><span>{{ a.total }}</span></div>
+                  <div class="maquette-boucle">{%tr endfor %}</div>
+                </div>
+                <div class="maquette-ligne"></div>
+                <div class="maquette-ligne moyenne"></div>
+              </div>
+              <div class="maquette-volet">
+                <div class="maquette-volet-titre">Variables</div>
+                <div class="maquette-volet-groupe">Client</div>
+                <span class="puce-variable maquette-source">client_nom</span>
+                <span class="puce-variable">client_adresse</span>
+                <div class="maquette-volet-groupe">Facture</div>
+                <span class="puce-variable">numero</span>
+                <span class="puce-variable">articles [ ]</span>
+                <span class="puce-variable">acquittee ?</span>
+              </div>
+              <span class="maquette-glisse puce-variable">client_nom</span>
+              <svg class="maquette-curseur" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#0e0e0e" stroke="#fff" stroke-width="1.2" /></svg>
+            </div>
+          </div>
+
+          <div class="accroche-carte" aria-hidden="true">
+            <span class="accroche-carte-glyphe"><span>{{</span><span class="clignote">nom</span><span>}}</span></span>
+          </div>
+
+          <div class="compatible">
+            <p class="compatible-titre etiquette">Compatible :</p>
+            <div class="fleches" role="group" aria-label="Formats">
+              <button type="button" data-defile="-1" aria-label="Précédent"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+              <button type="button" data-defile="1" aria-label="Suivant"><svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="logos" data-carrousel>
+          <div class="logos-cellule"><strong>.docx</strong><span>Word, LibreOffice</span></div>
+          <div class="logos-cellule"><strong>Jinja2</strong><span>Syntaxe de génération</span></div>
+          <div class="logos-cellule"><strong>React</strong><span>18 et 19</span></div>
+          <div class="logos-cellule"><strong>100 % web</strong><span>Aucun serveur requis</span></div>
+          <div class="logos-cellule"><strong>MIT</strong><span>Licence ouverte</span></div>
+        </div>
+      </section>
+
+      <!-- 2. Bandeau ----------------------------------------------------------- -->
+      <section class="conteneur bandeau" aria-label="Glisser, déposer">
+        <div class="bandeau-titre"><h2 class="titre-geant">Glisser. Déposer.</h2></div>
+        <div class="bandeau-vide"></div>
+        <div class="bandeau-icone"><span class="boite-icone"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" /><circle cx="10" cy="10" r="2.5" fill="currentColor" /></svg></span></div>
+        <div class="bandeau-motif coins" aria-hidden="true"><span class="puce-variable">{{ nom }}</span></div>
+      </section>
+
+      <!-- 3. Ce que l'on glisse ------------------------------------------------------- -->
+      <section class="conteneur deux-colonnes">
+        <div class="colonne-liste">
+          <h2 class="puce-titre">Tout se place à la souris</h2>
+          <ul class="liste-coins">
+            <li class="coins"><span class="coche" aria-hidden="true"></span>Variables</li>
+            <li class="coins"><span class="coche" aria-hidden="true"></span>Boucles</li>
+            <li class="coins"><span class="coche" aria-hidden="true"></span>Conditions</li>
+            <li class="coins"><span class="coche" aria-hidden="true"></span>Images variables</li>
+          </ul>
+          <a class="bouton" href="./demo/" data-brouille>Créer un modèle</a>
+        </div>
+        <div class="colonne-centre" aria-hidden="true">
+          <div class="pile-code">
+            <span class="puce-variable">{{ client_nom }}</span>
+            <span class="puce-variable">{%p if acquittee %}</span>
+            <span class="puce-variable">{%tr for a in articles %}</span>
+            <span class="puce-variable">{{ img(logo, "3cm") }}</span>
+          </div>
+        </div>
+        <div class="colonne-cartes">
+          <h2 class="puce-titre">Aller-retour avec Word</h2>
+          <p class="sous-titre">Le .docx reste le format pivot</p>
+          <div class="cartes-numerotees">
+            <article class="carte-num">
+              <header><span class="puce-carre"></span><span>01</span></header>
+              <div class="carte-num-icone">
+                <svg viewBox="0 0 64 64"><path d="M14 8h26l10 10v38H14z" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M40 8v10h10" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M32 46V26m-8 8l8-8 8 8" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+              </div>
+              <h3>Import d'un .docx existant</h3>
+              <p class="doux">Ses balises redeviennent des variables, boucles et conditions modifiables.</p>
+            </article>
+            <article class="carte-num">
+              <header><span class="puce-carre"></span><span>02</span></header>
+              <div class="carte-num-icone">
+                <svg viewBox="0 0 64 64"><path d="M14 8h26l10 10v38H14z" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M40 8v10h10" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M32 26v20m-8-8l8 8 8-8" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+              </div>
+              <h3>Export .docx prêt à l'emploi</h3>
+              <p class="doux">Le fichier exporté sert directement de modèle de génération.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Fonctionnalités -------------------------------------------------------- -->
+      <section class="conteneur bandeau bandeau-inverse" id="fonctionnalites" aria-labelledby="titre-fonctionnalites">
+        <div class="bandeau-motif coins" aria-hidden="true"><span class="sphere"></span></div>
+        <div class="bandeau-icone"><span class="boite-icone"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" /><circle cx="10" cy="10" r="2.5" fill="currentColor" /></svg></span></div>
+        <div class="bandeau-vide"></div>
+        <div class="bandeau-titre"><h2 class="titre-geant" id="titre-fonctionnalites">Fonctionnalités</h2></div>
+      </section>
+
+      <div class="conteneur entetes-paire">
+        <div>
+          <h3 class="puce-titre">Comme dans Word</h3>
+          <p class="sous-titre">Ruban, pages, styles, tableaux</p>
+        </div>
+        <div>
+          <h3 class="puce-titre">Pensé pour les modèles</h3>
+          <p class="sous-titre">La syntaxe s'écrit toute seule</p>
+        </div>
+      </div>
+
+      <section class="conteneur fonctions" aria-label="Liste des fonctionnalités">
+        <div class="fonctions-defilement" data-carrousel>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>01</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><rect x="10" y="12" width="44" height="40" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M10 22h44M18 30h28M18 37h20M18 44h24" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Il ressemble à Word</h3>
+            <p class="doux">Ruban, règles, pages A4, styles et thèmes : rien à réapprendre.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>02</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><rect x="8" y="24" width="30" height="14" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M38 31h14m-5-5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M14 31h18" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" /></svg></div>
+            <h3>Variables glissées</h3>
+            <p class="doux">Une variable glissée dans la page devient <code>{{ nom }}</code>.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>03</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><path d="M46 22a16 16 0 1 0 2 14" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M48 14v10H38" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Boucles</h3>
+            <p class="doux">Sur des paragraphes ou des lignes de tableau : une ligne par article.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>04</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><path d="M32 10l22 22-22 22-22-22z" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M26 32l4 4 9-9" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Conditions</h3>
+            <p class="doux">Un paragraphe n'apparaît que si la valeur est vraie, ou fausse.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>05</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><rect x="10" y="14" width="44" height="36" fill="none" stroke="currentColor" stroke-width="1.6" /><circle cx="24" cy="27" r="4" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M10 44l14-10 10 8 8-6 12 9" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Images variables</h3>
+            <p class="doux">Logo, signature, photo : la taille se règle dans le modèle.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>06</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><path d="M14 8h26l10 10v38H14z" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M22 30h20M22 38h20M22 46h12" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Import .docx</h3>
+            <p class="doux">Un modèle Word existant s'ouvre et ses balises redeviennent modifiables.</p>
+          </article>
+          <article class="carte-num">
+            <header><span class="puce-carre"></span><span>07</span></header>
+            <div class="carte-num-icone"><svg viewBox="0 0 64 64"><path d="M32 10v30m-10-10l10 10 10-10" fill="none" stroke="currentColor" stroke-width="1.6" /><path d="M12 44v10h40V44" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></div>
+            <h3>Export .docx</h3>
+            <p class="doux">Le fichier exporté sert directement de modèle de génération.</p>
+          </article>
+        </div>
+        <div class="fonctions-pied">
+          <div class="fleches" role="group" aria-label="Fonctionnalités">
+            <button type="button" data-defile="-1" aria-label="Précédent"><svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+            <button type="button" data-defile="1" aria-label="Suivant"><svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" /></svg></button>
+          </div>
+          <div class="fonctions-texte">
+            <p>
+              Le composant <code>RlDocxEditor</code> s'intègre dans n'importe quelle application React. Le rangement des modèles et la liste des variables viennent de votre application : l'éditeur ne connaît ni API, ni base de données.
+            </p>
+            <a class="bouton" href="./demo/" data-brouille>Voir la démo</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Cas d'usage ------------------------------------------------------------- -->
+      <section class="conteneur usage" id="usage" aria-labelledby="titre-usage">
+        <div class="usage-panneau panneau">
+          <h2 class="puce-titre">À quoi ça sert ?</h2>
+          <p class="titre-geant usage-titre" id="titre-usage">Cas<br />d'usage</p>
+        </div>
+        <div class="usage-recit">
+          <p>
+            Vous éditez un <strong>CRM</strong> et vos clients gèrent leurs propres modèles de fichiers : factures, devis, attestations.
+            Plutôt que d'imposer vos modèles, vous les laissez créer les leurs.
+          </p>
+          <p class="doux">
+            Le problème : les boucles et les variables d'un modèle Word s'écrivent dans une syntaxe que personne ne connaît.
+            Avec rl-docx-editor, c'est du gâteau : on glisse et on dépose les variables et les boucles, sans rien taper.
+          </p>
+        </div>
+        <div class="usage-compteur">
+          <div class="compteur panneau"><span class="etiquette">Modèles par client</span><strong>∞</strong></div>
+          <a class="bouton-noir" href="./demo/" aria-label="Ouvrir la démo"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" /></svg></a>
+        </div>
+      </section>
+
+      <section class="conteneur cas" aria-label="Exemples de documents">
+        <article class="carte-cas">
+          <span class="carte-cas-etiquette">Document</span>
+          <div class="carte-cas-haut"><span class="carte-cas-nom">Factures</span></div>
+          <dl class="carte-cas-stats">
+            <div><dt>{{ numero }}</dt><dd>Variables</dd></div>
+            <div><dt>{%tr for %}</dt><dd>Lignes d'articles</dd></div>
+            <div><dt>{%p if %}</dt><dd>Mention acquittée</dd></div>
+            <div><dt>img(logo)</dt><dd>Logo</dd></div>
+          </dl>
+          <a class="carte-cas-fleche" href="./demo/" aria-label="Essayer avec une facture">→</a>
+        </article>
+        <article class="carte-cas">
+          <span class="carte-cas-etiquette">Document</span>
+          <div class="carte-cas-haut"><span class="carte-cas-nom">Devis</span></div>
+          <dl class="carte-cas-stats">
+            <div><dt>{{ objet }}</dt><dd>Variables</dd></div>
+            <div><dt>{%tr for %}</dt><dd>Prestations</dd></div>
+            <div><dt>{%p if %}</dt><dd>Acompte</dd></div>
+            <div><dt>validite</dt><dd>Durée de l'offre</dd></div>
+          </dl>
+          <a class="carte-cas-fleche" href="./demo/" aria-label="Essayer avec un devis">→</a>
+        </article>
+        <article class="carte-cas">
+          <span class="carte-cas-etiquette">Document</span>
+          <div class="carte-cas-haut"><span class="carte-cas-nom">Attestations</span></div>
+          <dl class="carte-cas-stats">
+            <div><dt>{{ beneficiaire }}</dt><dd>Variables</dd></div>
+            <div><dt>{%p for %}</dt><dd>Modules suivis</dd></div>
+            <div><dt>{%p if %}</dt><dd>Évaluation réussie</dd></div>
+            <div><dt>img(signature)</dt><dd>Signature</dd></div>
+          </dl>
+          <a class="carte-cas-fleche" href="./demo/" aria-label="Essayer avec une attestation">→</a>
+        </article>
+      </section>
+
+      <!-- 6. Avant / après --------------------------------------------------------------- -->
+      <section class="conteneur bandeau" aria-labelledby="titre-probleme">
+        <div class="bandeau-titre"><h2 class="titre-geant" id="titre-probleme">Avant / après</h2></div>
+        <div class="bandeau-texte"><p class="puce-titre">Ne nous croyez pas<br />sur parole</p></div>
+        <div class="bandeau-carte-noire" aria-hidden="true"><span>{%</span><span>%}</span></div>
+      </section>
+
+      <section class="conteneur temoins" aria-label="Comparaison">
+        <article class="carte-temoin">
+          <header>
+            <span class="carte-temoin-avatar" aria-hidden="true">01</span>
+            <div><h3>Le modèle imposé</h3><p class="doux">Sans éditeur</p></div>
+          </header>
+          <div class="carte-temoin-corps">
+            <p>Le CRM livre ses factures et ses devis. Changer un logo, une mention ou l'ordre des colonnes passe par une demande au support… et une attente.</p>
+            <span class="carte-temoin-marge" aria-hidden="true">✕</span>
+          </div>
+        </article>
+        <article class="carte-temoin">
+          <header>
+            <span class="carte-temoin-avatar" aria-hidden="true">02</span>
+            <div><h3>La syntaxe à la main</h3><p class="doux">Modèles personnalisés</p></div>
+          </header>
+          <div class="carte-temoin-corps">
+            <p>Le client peut fournir son .docx, à condition d'y écrire lui-même :</p>
+            <pre class="bloc-code">{%tr for a in articles %}
+{{ a.designation }}  {{ a.total }}
+{%tr endfor %}</pre>
+            <p>Une accolade oubliée, et le document ne se génère plus.</p>
+            <span class="carte-temoin-marge" aria-hidden="true">✕</span>
+          </div>
+        </article>
+        <article class="carte-temoin est-solution">
+          <header>
+            <span class="carte-temoin-avatar" aria-hidden="true">03</span>
+            <div><h3>Avec rl-docx-editor</h3><p class="doux">Glisser-déposer</p></div>
+          </header>
+          <div class="carte-temoin-corps">
+            <p>Le client ouvre son modèle dans le navigateur, glisse <span class="puce-variable">articles</span> sur une ligne du tableau, dépose <span class="puce-variable">logo</span> en haut de page et enregistre.</p>
+            <p>Les balises sont écrites pour lui, au bon endroit, sans faute de frappe.</p>
+            <span class="carte-temoin-marge" aria-hidden="true">✓</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- 7. Syntaxe ------------------------------------------------------------------- -->
+      <section class="conteneur bandeau" id="syntaxe" aria-labelledby="titre-syntaxe">
+        <div class="bandeau-titre"><h2 class="titre-geant" id="titre-syntaxe">Syntaxe</h2></div>
+        <div class="bandeau-texte"><p class="puce-titre">Ce que produit<br />chaque geste</p></div>
+      </section>
+
+      <section class="conteneur gestes" aria-label="Exemples de syntaxe">
+        <article class="carte-geste">
+          <header><h3>Variable</h3><p class="etiquette">Texte, nombre, date</p></header>
+          <div class="carte-geste-code"><code>{{ client_nom }}</code></div>
+          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+        </article>
+        <article class="carte-geste">
+          <header><h3>Boucle</h3><p class="etiquette">Liste d'éléments</p></header>
+          <div class="carte-geste-code"><code>{%tr for a in articles %}<br />{%tr endfor %}</code></div>
+          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+        </article>
+        <article class="carte-geste">
+          <header><h3>Condition</h3><p class="etiquette">Oui / non</p></header>
+          <div class="carte-geste-code"><code>{%p if acquittee %}<br />{%p endif %}</code></div>
+          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+        </article>
+        <article class="carte-geste">
+          <header><h3>Image</h3><p class="etiquette">Logo, signature</p></header>
+          <div class="carte-geste-code"><code>{{ img(logo, "3cm") }}</code></div>
+          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+        </article>
+      </section>
+
+      <!-- 8. FAQ ------------------------------------------------------------------------ -->
+      <section class="conteneur bandeau bandeau-faq" id="faq" aria-labelledby="titre-faq">
+        <div class="bandeau-titre"><h2 class="titre-geant" id="titre-faq">FAQ</h2></div>
+        <div class="bandeau-vide"></div>
+        <div class="bandeau-motif coins" aria-hidden="true"><span class="sphere petite"></span></div>
+        <div class="bandeau-texte">
+          <p class="puce-titre">Questions fréquentes</p>
+          <p class="sous-titre">Tout ce qu'il faut savoir avant d'intégrer l'éditeur</p>
+        </div>
+      </section>
+
+      <section class="conteneur faq" aria-label="Questions et réponses">
+        <details>
+          <summary>Qu'est-ce que rl-docx-editor ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Un composant React qui affiche un éditeur de modèles Word dans le navigateur. On y écrit comme dans Word et on y glisse les variables de son application ; le résultat est un fichier .docx prêt à servir de modèle de génération.</p>
+        </details>
+        <details>
+          <summary>Mes clients doivent-ils connaître la syntaxe des modèles ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Non. Variables, boucles, conditions et images se placent à la souris depuis le volet « Variables » ; l'éditeur écrit les balises Jinja2 au bon endroit.</p>
+        </details>
+        <details>
+          <summary>Puis-je reprendre des modèles Word existants ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Oui. Un .docx s'importe dans l'éditeur : sa mise en forme est reprise et ses balises redeviennent des variables, boucles et conditions modifiables.</p>
+        </details>
+        <details>
+          <summary>Comment le document final est-il généré ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Le .docx exporté contient des balises Jinja2 dans Word : votre serveur le remplit avec ses données. La démo le fait directement dans le navigateur, puis le convertit en PDF.</p>
+        </details>
+        <details>
+          <summary>Où sont rangés les modèles ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Là où vous le décidez : l'éditeur passe par un adaptateur de stockage fourni par votre application (API, base de données…). Sans adaptateur, il range les modèles dans le navigateur.</p>
+        </details>
+        <details>
+          <summary>Faut-il un serveur pour l'éditeur ?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Non. L'édition, l'import et l'export .docx se font entièrement dans le navigateur.</p>
+        </details>
+      </section>
+
+      <!-- 9. Appel à l'action ---------------------------------------------------------- -->
+      <section class="conteneur bandeau bandeau-appel" aria-labelledby="titre-appel">
+        <div class="bandeau-titre"><h2 class="titre-geant" id="titre-appel">Essayez-le</h2></div>
+        <div class="bandeau-motif coins appel-lien">
+          <a class="appel-carte" href="./demo/"><span>Ouvrir la démo</span></a>
+          <a class="bouton-noir" href="./demo/" aria-label="Ouvrir la démo"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" /></svg></a>
+        </div>
+        <div class="bandeau-icone"><span class="boite-icone"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" /><circle cx="10" cy="10" r="2.5" fill="currentColor" /></svg></span></div>
+      </section>
+    </main>
+
+    <footer class="pied conteneur">
+      <div class="pied-haut">
+        <a class="marque" href="#haut">
+          <span class="marque-logo" aria-hidden="true">{ }</span>
+          <span class="marque-texte"><small>RLDEV</small><strong>Docx Editor</strong></span>
+        </a>
+        <p class="pied-accroche">Des modèles Word que vos clients écrivent eux-mêmes*</p>
+        <p class="pied-note etiquette">*Sans une ligne de code</p>
+        <a class="bouton" href="./demo/" data-brouille>Démo</a>
+      </div>
+      <div class="pied-colonnes">
+        <div>
+          <p class="etiquette">Produit</p>
+          <a href="#fonctionnalites">Fonctionnalités</a>
+          <a href="#usage">Cas d'usage</a>
+          <a href="#syntaxe">Syntaxe</a>
+        </div>
+        <div>
+          <p class="etiquette">Démo</p>
+          <a href="./demo/">Ouvrir la démo</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div>
+          <p class="etiquette">Bibliothèque</p>
+          <span>rl-docx-editor</span>
+          <span>Licence MIT</span>
+        </div>
+      </div>
+      <div class="pied-bas etiquette">
+        <span>© 2026</span>
+        <span>rl-docx-editor - une bibliothèque RLDEV.</span>
+      </div>
+      <div class="pied-geant" aria-hidden="true">
+        <span class="carre-orange coin-hg"></span>
+        <span class="carre-orange coin-hd"></span>
+        <span class="carre-orange coin-bg"></span>
+        <span class="carre-orange coin-bd"></span>
+        <span>R</span><span>L</span><span>D</span><span>E</span><span>V</span>
+      </div>
+    </footer>
   </body>
 </html>
