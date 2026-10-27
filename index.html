@@ -9,11 +9,11 @@
       content="Un éditeur de modèles Word dans le navigateur : on glisse ses variables à la souris, boucles, conditions et images, import et export .docx. Par RLDEV."
     />
     <meta name="theme-color" content="#e4e4e4" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='none' stroke='%23ff7120' stroke-width='4'/%3E%3Crect x='10' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3Crect x='18' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3C/svg%3E" />
-    <script type="module" crossorigin src="/assets/accueil-Ck4Pp2V1.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/brouillage-BeZ8upxm.js">
-    <link rel="stylesheet" crossorigin href="/assets/brouillage-DnTDR1Yn.css">
-    <link rel="stylesheet" crossorigin href="/assets/accueil-o8PC0fCv.css">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='none' stroke='%23ff7120' stroke-width='4'/%3E%3Crect x='10' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3Crect x='18' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="/assets/accueil-CDy4ycIr.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/brouillage-CLc7hFgs.js">
+    <link rel="stylesheet" crossorigin href="/assets/brouillage-DyPkbi2q.css">
+    <link rel="stylesheet" crossorigin href="/assets/accueil-fknPDIPm.css">
   </head>
   <body>
     <header class="entete">
@@ -22,7 +22,7 @@
           <span class="marque-logo" aria-hidden="true">{ }</span>
           <span class="marque-texte"><small>RLDEV</small><strong>Docx Editor</strong></span>
         </a>
-        <nav class="navigation" aria-label="Sections">
+        <nav class="navigation" id="navigation" aria-label="Sections">
           <a href="#produit">Produit</a>
           <a href="#fonctionnalites">Fonctionnalités</a>
           <a href="#usage">Cas d'usage</a>
@@ -30,6 +30,9 @@
           <a href="#faq">FAQ</a>
         </nav>
         <div class="entete-actions">
+          <button type="button" class="menu-mobile" aria-expanded="false" aria-controls="navigation">
+            <span class="menu-mobile-icone" aria-hidden="true"></span><span class="visuellement-cache">Menu</span>
+          </button>
           <a class="bouton" href="./demo/" data-brouille>Démo</a>
         </div>
       </div>
@@ -62,7 +65,7 @@
             </p>
             <div class="accroche-actions">
               <a class="bouton" href="./demo/" data-brouille>Essayer la démo</a>
-              <a class="bouton-contour" href="#fonctionnalites">Comment ça marche</a>
+              <a class="bouton-contour" href="#etapes">Comment ça marche</a>
             </div>
           </div>
 
@@ -125,6 +128,35 @@
           <div class="logos-cellule"><strong>100 % web</strong><span>Aucun serveur requis</span></div>
           <div class="logos-cellule"><strong>MIT</strong><span>Licence ouverte</span></div>
         </div>
+      </section>
+
+      <!-- 1 bis. La démo en 3 étapes ------------------------------------------------ -->
+      <section class="conteneur etapes" id="etapes" aria-labelledby="titre-etapes">
+        <div class="etapes-entete">
+          <h2 class="puce-titre" id="titre-etapes">La démo en 3 étapes</h2>
+          <p class="sous-titre">Aucune inscription, rien à installer, deux minutes suffisent</p>
+        </div>
+        <ol class="etapes-liste">
+          <li class="etape-carte">
+            <span class="etape-carte-num">1</span>
+            <h3>Choisissez un document</h3>
+            <p class="doux">Facture, devis ou attestation : un exemple prêt à l'emploi est créé pour vous.</p>
+          </li>
+          <li class="etape-carte">
+            <span class="etape-carte-num">2</span>
+            <h3>Changez les informations</h3>
+            <p class="doux">Nom du client, lignes, dates : tout est pré-rempli, modifiez ce que vous voulez.</p>
+          </li>
+          <li class="etape-carte">
+            <span class="etape-carte-num">3</span>
+            <h3>Téléchargez le PDF</h3>
+            <p class="doux">Un clic sur « Convertir en PDF » : le document est prêt, fidèle au modèle Word.</p>
+          </li>
+        </ol>
+        <p class="etapes-bonus">
+          <span>Et pour changer la mise en page ?</span> « Modifier le template » ouvre l'éditeur façon Word : vous glissez les informations dans la page, à la souris.
+          <a class="bouton" href="./demo/" data-brouille>Lancer la démo</a>
+        </p>
       </section>
 
       <!-- 2. Bandeau ----------------------------------------------------------- -->
