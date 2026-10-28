@@ -8,12 +8,12 @@
       name="description"
       content="Un éditeur de modèles Word dans le navigateur : on glisse ses variables à la souris, boucles, conditions et images, import et export .docx. Par RLDEV."
     />
-    <meta name="theme-color" content="#e4e4e4" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='none' stroke='%23ff7120' stroke-width='4'/%3E%3Crect x='10' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3Crect x='18' y='13' width='4' height='4' fill='%230e0e0e'/%3E%3C/svg%3E" />
-    <script type="module" crossorigin src="/assets/accueil-CDy4ycIr.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/brouillage-CLc7hFgs.js">
-    <link rel="stylesheet" crossorigin href="/assets/brouillage-DyPkbi2q.css">
-    <link rel="stylesheet" crossorigin href="/assets/accueil-fknPDIPm.css">
+    <meta name="theme-color" content="#e5e6de" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='6' fill='%23d4ff3a' stroke='%230f110b' stroke-width='4'/%3E%3Crect x='10' y='13' width='4' height='4' fill='%230f110b'/%3E%3Crect x='18' y='13' width='4' height='4' fill='%230f110b'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="/assets/accueil-Xp_RgczV.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/brouillage-D3EQtD_n.js">
+    <link rel="stylesheet" crossorigin href="/assets/brouillage-BTeTvvS6.css">
+    <link rel="stylesheet" crossorigin href="/assets/accueil-BgiPY9Ct.css">
   </head>
   <body>
     <header class="entete">
@@ -43,8 +43,8 @@
       <section class="accroche" id="produit" aria-labelledby="titre-accroche">
         <div class="conteneur accroche-grille">
           <div class="accroche-bandeau">
-            <span class="carre-orange coin-hg" aria-hidden="true"></span>
-            <span class="carre-orange coin-hd" aria-hidden="true"></span>
+            <span class="carre-accent coin-hg" aria-hidden="true"></span>
+            <span class="carre-accent coin-hd" aria-hidden="true"></span>
             <h1 class="defilant" id="titre-accroche">
               <span class="visuellement-cache">Modèles Word, glisser-déposer</span>
               <span class="defilant-piste" aria-hidden="true">
@@ -53,9 +53,9 @@
               </span>
             </h1>
             <p class="accroche-etiquettes">
-              <span class="carre-orange" aria-hidden="true"></span>
+              <span class="carre-accent" aria-hidden="true"></span>
               <span>Éditeur</span><span>Navigateur</span><span>.docx</span>
-              <span class="carre-orange pousse" aria-hidden="true"></span>
+              <span class="carre-accent pousse" aria-hidden="true"></span>
             </p>
           </div>
 
@@ -104,7 +104,7 @@
                 <span class="puce-variable">acquittee ?</span>
               </div>
               <span class="maquette-glisse puce-variable">client_nom</span>
-              <svg class="maquette-curseur" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="#0e0e0e" stroke="#fff" stroke-width="1.2" /></svg>
+              <svg class="maquette-curseur" viewBox="0 0 24 24"><path d="M4 2l16 10-7 1.5L9.5 21z" fill="var(--texte)" stroke="#fff" stroke-width="1.2" /></svg>
             </div>
           </div>
 
@@ -402,22 +402,22 @@
         <article class="carte-geste">
           <header><h3>Variable</h3><p class="etiquette">Texte, nombre, date</p></header>
           <div class="carte-geste-code"><code>{{ client_nom }}</code></div>
-          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+          <footer><span class="coin-accent"></span><span>Glisser <b>+</b></span><span class="coin-accent"></span></footer>
         </article>
         <article class="carte-geste">
           <header><h3>Boucle</h3><p class="etiquette">Liste d'éléments</p></header>
           <div class="carte-geste-code"><code>{%tr for a in articles %}<br />{%tr endfor %}</code></div>
-          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+          <footer><span class="coin-accent"></span><span>Glisser <b>+</b></span><span class="coin-accent"></span></footer>
         </article>
         <article class="carte-geste">
           <header><h3>Condition</h3><p class="etiquette">Oui / non</p></header>
           <div class="carte-geste-code"><code>{%p if acquittee %}<br />{%p endif %}</code></div>
-          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+          <footer><span class="coin-accent"></span><span>Glisser <b>+</b></span><span class="coin-accent"></span></footer>
         </article>
         <article class="carte-geste">
           <header><h3>Image</h3><p class="etiquette">Logo, signature</p></header>
           <div class="carte-geste-code"><code>{{ img(logo, "3cm") }}</code></div>
-          <footer><span class="coin-orange"></span><span>Glisser <b>+</b></span><span class="coin-orange"></span></footer>
+          <footer><span class="coin-accent"></span><span>Glisser <b>+</b></span><span class="coin-accent"></span></footer>
         </article>
       </section>
 
@@ -503,10 +503,10 @@
         <span>rl-docx-editor - une bibliothèque RLDEV.</span>
       </div>
       <div class="pied-geant" aria-hidden="true">
-        <span class="carre-orange coin-hg"></span>
-        <span class="carre-orange coin-hd"></span>
-        <span class="carre-orange coin-bg"></span>
-        <span class="carre-orange coin-bd"></span>
+        <span class="carre-accent coin-hg"></span>
+        <span class="carre-accent coin-hd"></span>
+        <span class="carre-accent coin-bg"></span>
+        <span class="carre-accent coin-bd"></span>
         <span>R</span><span>L</span><span>D</span><span>E</span><span>V</span>
       </div>
     </footer>
